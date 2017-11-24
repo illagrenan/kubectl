@@ -7,7 +7,7 @@ RUN set -x                  && \
     apk add ca-certificates && \
     rm -rf /var/cache/apk/*
 
-ENV K8S_VERSION 1.8.1
+ENV K8S_VERSION 1.8.4
 RUN wget http://storage.googleapis.com/kubernetes-release/release/v${K8S_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl && \
     chmod 755 /usr/local/bin/kubectl
 
