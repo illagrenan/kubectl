@@ -16,7 +16,7 @@ To sign in you have to pass enviromental variables which creates kubeconfig.
 - `K8S_PASSWORD`
 
 ```
-docker run -it -e K8S_SERVER=... -e K8S_USER=... -e K8S_PASSWORD=... radeklos/kubectl /bin/sh
+docker run -it -e K8S_SERVER=https://... -e K8S_USER=admin -e K8S_PASSWORD=... illagrenan/kubectl /bin/sh
 
 # kubectl get pods
 ...
