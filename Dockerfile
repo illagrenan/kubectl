@@ -20,6 +20,8 @@ COPY --from=builder /downloads/kubectl /usr/local/bin/kubectl
 RUN chmod +x /usr/local/bin/kubectl
 RUN kubectl version --client
 
-# ENTRYPOINT ["/kubectl_config.sh"]
-ENTRYPOINT ["kubectl"]
+COPY kubectl_config.sh /kubectl_config.sh
+RUN chmod +x /kubectl_config.sh
+
+ENTRYPOINT ["/kubectl_config.sh"]
 CMD ['kubectl']

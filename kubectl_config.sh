@@ -1,9 +1,10 @@
 #!/bin/sh
 
-kubectl config set-cluster k8s --server=${K8S_SERVER} --insecure-skip-tls-verify=true
-kubectl config set-credentials k8s --username=${K8S_USER} --password=${K8S_PASSWORD}
-kubectl config set-context k8s --cluster=k8s --user=k8s
-kubectl config use-context k8s
+kubectl config set-credentials ${KUBERNETES_CLUSTER_NAME} --username=${KUBERNETES_USER:-admin} --password=${KUBERNETES_PASSWORD}
+kubectl config set-cluster ${KUBERNETES_CLUSTER_NAME} --insecure-skip-tls-verify=true --server=https://api.${KUBERNETES_CLUSTER_NAME}
+
+kubectl config set-context ${KUBERNETES_CLUSTER_NAME} --user=${KUBERNETES_CLUSTER_NAME} --namespace=default --cluster=${KUBERNETES_CLUSTER_NAME}
+kubectl config use-context ${KUBERNETES_CLUSTER_NAME}
 
 # This will exec the CMD from your Dockerfile, i.e. "npm start"
 exec "$@"
