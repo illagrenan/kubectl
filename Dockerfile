@@ -24,4 +24,3 @@ COPY kubectl_config.sh /kubectl_config.sh
 RUN chmod +x /kubectl_config.sh
 
 ENTRYPOINT ["/kubectl_config.sh"]
-CMD ['kubectl']
