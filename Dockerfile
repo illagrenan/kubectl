@@ -1,16 +1,24 @@
-FROM alpine:3.6
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Stage 1: Install curl and download kubectl
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FROM alpine:latest as builder
 
-RUN set -x
-RUN apt update && \
-    apk add ca-certificates && \
-    rm -rf /var/cache/apk/*
+ARG KUBERNETES_VERSION=v1.9.0-alpha.3
 
-ARG K8S_VERSION=1.9.0-alpha.3
-RUN wget https://storage.googleapis.com/kubernetes-release/release/v${K8S_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl && \
-    chmod 755 /usr/local/bin/kubectl
+RUN apk add --purge --no-cache curl ca-certificates
+RUN mkdir -p /downloads
+RUN curl -fsSL https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl -o /downloads/kubectl
 
-COPY kubectl_config.sh /kubectl_config.sh
-RUN chmod +x /kubectl_config.sh
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Stage 2: Copy downloaded kubectl and set permissions
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FROM alpine:latest
+
+LABEL authors="Vašek Dohnal <vaclav.dohnal@gmail.com>"
+
+COPY --from=builder /downloads/kubectl /usr/local/bin/kubectl
+RUN chmod +x /usr/local/bin/kubectl
+RUN kubectl version --client
 
 # ENTRYPOINT ["/kubectl_config.sh"]
 ENTRYPOINT ["kubectl"]
