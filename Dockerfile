@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 LABEL authors="Vašek Dohnal <vaclav.dohnal@gmail.com>"
-ARG KUBERNETES_VERSION=v1.9.0-alpha.3
+ARG KUBERNETES_VERSION=v1.9.0-beta.2
 
 RUN apk add --purge --no-cache curl ca-certificates
 RUN mkdir -p /downloads
