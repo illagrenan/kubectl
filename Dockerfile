@@ -1,7 +1,7 @@
 FROM illagrenan/alpine-curl:latest
 
 LABEL authors="Vašek Dohnal <vaclav.dohnal@gmail.com>"
-ARG KUBERNETES_VERSION=v1.12.2
+ARG KUBERNETES_VERSION=v1.16.2
 
 RUN mkdir -p /downloads
 RUN curl -fsSL https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
